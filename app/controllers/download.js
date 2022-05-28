@@ -9,6 +9,8 @@ module.exports = function (app) {
 router.get('/download.html', function (req, res, next) {
 	var queryParam = req.query;
 	if(queryParam != undefined){
+		res.setHeader('content-Type','application/octet-stream');
+		res.setHeader('content-Disposition', `attachment;filename=${queryParam.file_name}`)
 		res.download('freedom/upload/'+queryParam.file_name);
 	}
 });
@@ -18,6 +20,8 @@ router.get('/download.html', function (req, res, next) {
 router.post('/download.html', function (req, res) {
 	var queryParam = req.body.file_name;
 	if(queryParam != undefined){
+		res.setHeader('content-Type','application/octet-stream');
+		res.setHeader('content-Disposition', `attachment;filename=${queryParam}`)
 		res.download('freedom/upload/'+queryParam);
 	}
 });
