@@ -44,32 +44,6 @@ block body
             |           Dashboard
           |         
           |         
-          .stat-container
-            .stat-holder
-              .stat
-                span 564
-                |               Completed Sales
-              // /stat
-            // /stat-holder
-            .stat-holder
-              .stat
-                span 423
-                |               Pending Sales
-              // /stat
-            // /stat-holder
-            .stat-holder
-              .stat
-                span 96
-                |               Returned Sales
-              // /stat
-            // /stat-holder
-            .stat-holder
-              .stat
-                span 2
-                |               Chargebacks
-              // /stat
-            // /stat-holder
-          // /stat-container
           .widget-content
             button#deleteall.btn.btn-primary.btn-xs(type="button",style="float:right") 删除所有
             h3 所有文件列表
@@ -84,9 +58,11 @@ block body
                   |                   
                   th 最近操作时间
                   |                   
-                  th 删除管理
+                  th 删除
                   |                   
-                  th 下载管理
+                  th 下载
+                  |                   
+                  th 复制
               tbody(id="filelist_tr")                  
                 tr(v-for="(item, index) in fileslist")
                   td {{index+1}}
@@ -94,10 +70,13 @@ block body
                   td {{item.file_size}}
                   td {{item.file_latest_ch}}
                   td 
-                    a(href="javascript:void(0)" v-on:click="deleteFile(item.file_name)") 点击删除
+                    a(href="javascript:void(0)" v-on:click="deleteFile(item.file_name)") 删除
                   td 
                     // a(:href=`/download.html?file_name=${item.file_name}`) 点击下载
-                    a(href="javascript:void(0)" v-on:click="downloadFile(item.file_name)") 点击下载
+                    a(href="javascript:void(0)" v-on:click="downloadFile(item.file_name)") 下载
+                  td 
+                    a(href="javascript:void(0)" v-on:click="copy(item.file_name)") 复制  
+
 
           // /widget
 
@@ -110,7 +89,10 @@ block body
                 li  
                   input(type="submit",value="提交")
           // /widget
-
+          .widget-content
+            h3 API上传
+            textarea(cols="200", rows="5",style="width:100%;") 
+              | curl -F 'file=@/文件路径' !{hostname}/upload.html
           .widget-content
             h3 拖拽上传
             #dropz.dropzone
@@ -136,6 +118,7 @@ block body
 
   script.
     $(function(){
+      window.hostname = "!{hostname}";
       var myvue = new Vue({
         el: '#filelist_tr',
         data:{
@@ -153,6 +136,15 @@ block body
           downloadFile:function (file_name) {
             // body...
             location.href=`/download.html?file_name=${file_name}`;
+          },
+          copy:function (file_name) {
+              const input = document.createElement('textarea')
+              input.value = `${hostname}/download.html?file_name=${file_name}`
+              document.body.appendChild(input)
+              input.focus()
+              input.select()
+              document.execCommand('copy')
+              document.body.removeChild(input)
           }
         }
       });
@@ -185,8 +177,6 @@ block body
                 // body...
                 console.log(fileslist);
                 myvue.fileslist = fileslist;
-
-
               })
             });
         }

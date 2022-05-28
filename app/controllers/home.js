@@ -26,8 +26,11 @@ router.get('/index.html', function (req, res, next) {
 	var expires = new Date();
 	expires.setTime(expires.getTime()+120*1000);
 	res.setHeader('Expires',expires.toGMTString());
+	// localhost:8421
+	var host = req.get('host');
 	res.render('pages/index', {
-		file_info: JSON.stringify(basic.getFileinfos(DIRPATH))
+		file_info: JSON.stringify(basic.getFileinfos(DIRPATH)),
+		hostname: host
 	});
 });
 
