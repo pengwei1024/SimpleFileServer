@@ -139,7 +139,7 @@ block body
           },
           copy:function (file_name) {
               const input = document.createElement('textarea')
-              input.value = `${hostname}/download.html?file_name=${file_name}`
+              input.value = `${hostname}/attach/${file_name}`
               document.body.appendChild(input)
               input.focus()
               input.select()
