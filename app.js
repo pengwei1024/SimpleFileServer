@@ -4,7 +4,17 @@ var express = require('express'),
 config = require('./config/config');
 
 var app = express();
+const bodyParser = require("body-parser");
 
+app.use(bodyParser.json({
+  limit: '500mb'
+}));
+
+app.use(bodyParser.urlencoded({
+  limit: '500mb',
+  parameterLimit: 1000000,
+  extended: true 
+}));
 
 module.exports = require('./config/express')(app, config);
 
@@ -19,9 +29,6 @@ module.exports = require('./config/express')(app, config);
 //   }).catch(function (e) {
 //     throw new Error(e);
 //   });
-
-app.use(express.urlencoded({ limit: '500mb', extended: true }))
-app.use(express.json({limit: '500mb'}))
 
 app.listen(config.port, function () {
   console.log('Express server listening on port ' + config.port);
