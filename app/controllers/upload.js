@@ -12,15 +12,15 @@ module.exports = function (app) {
 };
 
 router.post('/upload.html', function (req,res) {
-	
+
 	// 解析一个文件上传
 	var form = new multiparty.Form({uploadDir: UPLOADPATH});
 	//设置编辑
 	form.encoding = 'utf-8';
 	// //设置文件存储路径
 	// form.uploadDir = "freedom/";
-	//设置单文件大小限制 
-	form.maxFilesSize = 500 * 1024 * 1024;
+	// 设置单文件大小限制 1G
+	form.maxFilesSize = 1024 * 1024 * 1024;
 	//form.maxFields = 1000;  设置所以文件的大小总和
 	form.parse(req, function(err, fields, files) {
 		if (err) {
