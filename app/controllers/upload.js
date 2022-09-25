@@ -19,8 +19,8 @@ router.post('/upload.html', function (req,res) {
 	form.encoding = 'utf-8';
 	// //设置文件存储路径
 	// form.uploadDir = "freedom/";
-	// 设置单文件大小限制 1G
-	form.maxFilesSize = 3 * 1024 * 1024 * 1024;
+	// 设置单文件大小限制 30G
+	form.maxFilesSize = 30 * 1024 * 1024 * 1024;
 	//form.maxFields = 1000;  设置所以文件的大小总和
 	form.parse(req, function(err, fields, files) {
 		if (err) {
