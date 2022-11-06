@@ -54,7 +54,7 @@ block body
                   |                   
                   th 文件名
                   |                   
-                  th 文件大小(Byte)
+                  th 文件大小(M)
                   |                   
                   th 最近操作时间
                   |                   
@@ -67,7 +67,7 @@ block body
                 tr(v-for="(item, index) in fileslist")
                   td {{index+1}}
                   td {{item.file_name}}
-                  td {{item.file_size}}
+                  td {{item.file_size/1024/1024}}
                   td {{item.file_latest_ch}}
                   td 
                     a(href="javascript:void(0)" v-on:click="deleteFile(item.file_name)") 删除
