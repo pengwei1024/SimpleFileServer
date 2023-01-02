@@ -13,6 +13,12 @@ router.get('/download.html', function (req, res, next) {
 	}
 });
 
+router.get('/preview/:fileName', function (req, res, next) {
+	if(req.params.fileName){
+		res.sendFile('freedom/upload/'+req.params.fileName, req.params.fileName);
+	}
+});
+
 router.get('/attach/:fileName', function (req, res, next) {
 	if(req.params.fileName){
 		res.download('freedom/upload/'+req.params.fileName, req.params.fileName);
