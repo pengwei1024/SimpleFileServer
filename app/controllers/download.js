@@ -15,7 +15,7 @@ router.get('/download.html', function (req, res, next) {
 
 router.get('/preview/:fileName', function (req, res, next) {
 	if(req.params.fileName){
-		res.sendFile('freedom/upload/'+req.params.fileName, req.params.fileName);
+		res.sendFile('freedom/upload/'+req.params.fileName, {root: __dirname });
 	}
 });
 
